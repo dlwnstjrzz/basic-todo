@@ -1,69 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { validate } from 'utils/utils';
 
 function SignUp() {
   const navigate = useNavigate();
-
   const [errorMessage, setErrorMessage] = useState({
     email: '',
     password: '',
   });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isFormFilled, setIsFormFilled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 로그인과 마찬가지로 회원가입 api 실행
-  const handleRegister = async () => {
-    // try {
-    //   setErrorMsg(' ');
-    //   // 데이터베이스에 회원가입시 작성한 내용을 저장
-    //   const setUser = await db
-    //     .collection('users')
-    //     .doc(userId)
-    //     .set({ displayName: registerName, uid: userId, friends: [], visitMsg: [], visitUsers: [] });
-    //   setRegisterEmail('');
-    //   setRegisterPassword('');
-    //   alert('회원가입이 완료되었습니다!');
-    //   navigate('/login');
-    // } catch (err) {
-    //   switch (err.code) {
-    //     case 'auth/weak-password':
-    //       setErrorMsg('비밀번호는 6자리 이상이어야 합니다');
-    //       break;
-    //     case 'auth/invalid-email':
-    //       setErrorMsg('잘못된 이메일 주소입니다');
-    //       break;
-    //     case 'auth/email-already-in-use':
-    //       setErrorMsg('이미 가입되어 있는 계정입니다');
-    //       break;
-    //   }
-    // }
+  const handleRegister = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    console.log('able');
+    const inputData = { email, password };
+    axios
+      .post('https://pre-onboarding-selection-task.shop/auth/signup', inputData, {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, inputType: 'email' | 'password') => {
     const { value } = event.target;
     const validationResult = validate(value, inputType);
     setErrorMessage((prevErrorMessage) => ({ ...prevErrorMessage, [inputType]: validationResult[inputType] }));
+    inputType === 'email' ? setEmail(value) : setPassword(value);
   };
-  useEffect(() => {
-    if (email !== '' && password !== '') {
-      setIsFormFilled(true);
-    } else {
-      setIsFormFilled(false);
-    }
-  }, [email, password]);
+
+  const isDisabled = !email || !password || !!errorMessage.email || !!errorMessage.password;
   return (
     <SignUpWrapper>
       <SignUpContainer>
         <Title>Sign Up</Title>
-        <SignUpForm>
+        <SignUpForm onSubmit={handleRegister}>
           <UserInput
             data-testid="email-input"
             onChange={(event) => handleInputChange(event, 'email')}
             placeholder="EMAIL"
           />
-          <ErrorMessage>{errorMessage.email}</ErrorMessage>
+          {errorMessage.email && <ErrorMessage>{errorMessage.email}</ErrorMessage>}
           <Line />
           <UserInput
             data-testid="password-input"
@@ -71,15 +57,15 @@ function SignUp() {
             onChange={(event) => handleInputChange(event, 'password')}
             placeholder="PASSWORD"
           />
-          <ErrorMessage>{errorMessage.password}</ErrorMessage>
+          {errorMessage.password && <ErrorMessage>{errorMessage.password}</ErrorMessage>}
           <Line />
-          <SubmitBtn disabled={!isFormFilled} onClick={handleRegister}>
+          <SubmitBtn type="submit" data-testid="signup-button" disabled={isDisabled}>
             Register
           </SubmitBtn>
         </SignUpForm>
         <Options>
-          <Link>이미 계정이 있으신가요?</Link>
-          <Link onClick={() => navigate('/login')}>로그인</Link>
+          <p>이미 계정이 있으신가요?</p>
+          <Link onClick={() => navigate('/signin')}>로그인하러 가기</Link>
         </Options>
       </SignUpContainer>
     </SignUpWrapper>
@@ -132,7 +118,7 @@ const SubmitBtn = styled.button`
   width: 100%;
   text-transform: uppercase;
   outline: 0;
-  background: ${({ value }) => (value ? '#26428f' : '#BCBCBC')};
+  background: ${({ disabled }) => (disabled ? '#BCBCBC' : '#26428f')};
 
   border: 0;
   border-radius: 10px;
@@ -160,7 +146,7 @@ const SignUpContainer = styled.div.attrs({ className: 'SignUp' })`
   font-family: 'Pretended';
 `;
 
-const SignUpForm = styled.div`
+const SignUpForm = styled.form`
   width: 70%;
   margin: 10px auto;
   text-align: center;
