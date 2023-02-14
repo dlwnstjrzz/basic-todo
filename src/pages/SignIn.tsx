@@ -1,67 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { validate } from 'utils/utils';
 
-// 회원가입 폼 사용자 입력 데이터
 function SignIn() {
-  // react router dom 메서드로 원하는 url로 이동
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState({
+    email: '',
+    password: '',
+  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [errorMsg, setErrorMsg] = useState(' ');
-  const [typingEmail, setTypingEmail] = useState('');
-  const [typingPassword, setTypingPassword] = useState('');
-  const [isFill, setIsFill] = useState(false);
-
-  // 유저가 입력한 값을 상태로 저장
-  const handleUserInput = (e, type) => {
-    if (type === 'id') {
-      setTypingEmail(e.target.value);
-    } else if (type === 'password') {
-      setTypingPassword(e.target.value);
-    }
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, inputType: 'email' | 'password') => {
+    const { value } = event.target;
+    const validationResult = validate(value, inputType);
+    setErrorMessage((prevErrorMessage) => ({ ...prevErrorMessage, [inputType]: validationResult[inputType] }));
+    inputType === 'email' ? setEmail(value) : setPassword(value);
   };
 
-  // 로그인 버튼 클릭시 firebase 로그인 인증 api 실행
-  const handleLogin = async (event) => {
-    try {
-      alert('로그인에 성공하였습니다!');
-      navigate('/');
-    } catch (err) {
-      setErrorMsg('입력하신 이메일 또는 비밀번호가 일치하지 않습니다.');
-    }
-
-    event.preventDefault();
-  };
-
-  // 유저가 이메일과 패스워드를 모두 입력해야 Login버튼이 활성화되게 함
-  useEffect(() => {
-    if (!(typingEmail === '' || typingPassword === '')) {
-      setIsFill(true);
-    } else {
-      setIsFill(false);
-    }
-  }, [typingEmail, typingPassword]);
-
+  const isDisabled = !email || !password || !!errorMessage.email || !!errorMessage.password;
   return (
-    <SignUpWrapper>
-      <SignUpContainer>
-        <Title>Login</Title>
-        <SignUpForm>
-          <UserInput onChange={(e) => handleUserInput(e, 'id')} placeholder="EMAIL" />
+    <SignInWrapper>
+      <SignInContainer>
+        <Title>LOG IN</Title>
+        <SignInForm>
+          <UserInput
+            data-testid="email-input"
+            onChange={(event) => handleInputChange(event, 'email')}
+            placeholder="EMAIL"
+          />
+          {errorMessage.email && <ErrorMessage>{errorMessage.email}</ErrorMessage>}
           <Line />
-          <UserInput type="password" onChange={(e) => handleUserInput(e, 'password')} placeholder="PASSWORD" />
+          <UserInput
+            data-testid="password-input"
+            type="password"
+            onChange={(event) => handleInputChange(event, 'password')}
+            placeholder="PASSWORD"
+          />
+          {errorMessage.password && <ErrorMessage>{errorMessage.password}</ErrorMessage>}
           <Line />
-          <ErrorMessage>{errorMsg}</ErrorMessage>
-          <SubmitBtn disabled={!isFill} onClick={handleLogin}>
-            LOGIN
+          <SubmitBtn data-testid="signin-button" disabled={isDisabled}>
+            Login
           </SubmitBtn>
-        </SignUpForm>
+        </SignInForm>
         <Options>
-          <Link>Forgot Password?</Link>
-          <Link onClick={() => navigate('/signup')}>회원가입</Link>
+          <p>계정이 없으신가요?</p>
+          <Link onClick={() => navigate('/signup')}>회원가입하러 가기</Link>
         </Options>
-      </SignUpContainer>
-    </SignUpWrapper>
+      </SignInContainer>
+    </SignInWrapper>
   );
 }
 const ErrorMessage = styled.p`
@@ -89,7 +77,7 @@ const Line = styled.div`
 
 const UserInput = styled.input`
   border: none;
-  width: 230px;
+  width: 100%;
   outline: none;
   font-size: 12px;
 `;
@@ -111,7 +99,7 @@ const SubmitBtn = styled.button`
   width: 100%;
   text-transform: uppercase;
   outline: 0;
-  background: ${({ value }) => (value ? '#26428f' : '#BCBCBC')};
+  background: ${({ disabled }) => (disabled ? '#BCBCBC' : '#26428f')};
 
   border: 0;
   border-radius: 10px;
@@ -123,13 +111,13 @@ const SubmitBtn = styled.button`
   font-size: 13px;
   letter-spacing: 0.03em;
 `;
-const SignUpWrapper = styled.div`
+const SignInWrapper = styled.div`
   display: flex;
   justify-content: center;
   height: 100vh;
   align-items: center;
 `;
-const SignUpContainer = styled.div.attrs({ className: 'SignUp' })`
+const SignInContainer = styled.div.attrs({ className: 'SignUp' })`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -139,7 +127,7 @@ const SignUpContainer = styled.div.attrs({ className: 'SignUp' })`
   font-family: 'Pretended';
 `;
 
-const SignUpForm = styled.div`
+const SignInForm = styled.div`
   width: 70%;
   margin: 10px auto;
   text-align: center;
