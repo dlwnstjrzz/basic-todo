@@ -1,30 +1,15 @@
-import React, { useState } from 'react';
+import useSignIn from 'hooks/useSignIn';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { validate } from 'utils/utils';
 
 function SignIn() {
+  const { errorMessage, handleInputChange, handleSignIn, isDisabled } = useSignIn();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState({
-    email: '',
-    password: '',
-  });
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, inputType: 'email' | 'password') => {
-    const { value } = event.target;
-    const validationResult = validate(value, inputType);
-    setErrorMessage((prevErrorMessage) => ({ ...prevErrorMessage, [inputType]: validationResult[inputType] }));
-    inputType === 'email' ? setEmail(value) : setPassword(value);
-  };
-
-  const isDisabled = !email || !password || !!errorMessage.email || !!errorMessage.password;
   return (
     <SignInWrapper>
       <SignInContainer>
         <Title>LOG IN</Title>
-        <SignInForm>
+        <SignInForm onSubmit={handleSignIn}>
           <UserInput
             data-testid="email-input"
             onChange={(event) => handleInputChange(event, 'email')}
@@ -60,6 +45,7 @@ const ErrorMessage = styled.p`
 const Link = styled.a`
   text-decoration: none;
   cursor: pointer;
+  color: blue;
 `;
 const Options = styled.div`
   display: flex;
@@ -127,7 +113,7 @@ const SignInContainer = styled.div.attrs({ className: 'SignUp' })`
   font-family: 'Pretended';
 `;
 
-const SignInForm = styled.div`
+const SignInForm = styled.form`
   width: 70%;
   margin: 10px auto;
   text-align: center;
