@@ -1,6 +1,6 @@
 import { SignIn, SignUp, Todo } from 'pages';
 import { useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { HashRouter as Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 function App() {
   const navigate = useNavigate();
