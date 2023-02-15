@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# To Do App
+## 주요 사용 기술 스택
+- react
+- typescript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 배포 링크
+### [github-pages 배포 링크](https://dlwnstjrzz.github.io/wanted-pre-onboarding-frontend/)
 
-## Available Scripts
+## 프로젝트 실행 방법
+node.js 버전 - v16.13.1
 
-In the project directory, you can run:
+node.js 설치 후
+이 저장소를 클론합니다.
 
-### `npm start`
+```
+git clone https://github.com/dlwnstjrzz/wanted-pre-onboarding-frontend.git
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+클론한 폴더로 이동하여 다음 명령을 실행합니다.
+```
+cd to-do-app
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 중요!!
+.env 파일을 설정해줍니다.
+```
+REACT_APP_HOST = https://pre-onboarding-selection-task.shop
+```
 
-### `npm test`
+앱을 실행합니다.
+```
+npm run start
+```
+앱은 http://localhost:3000에서 실행됩니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 사용법
+로그인
+앱을 실행하면 로그인 화면이 나타납니다. 이미 계정이 있다면 로그인을 하고, 없다면 회원 가입을 하십시오.
 
-### `npm run build`
+할 일 추가
+할 일을 추가하려면 화면 상단의 입력란에 내용을 입력한 후 추가 버튼을 누르면 됩니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+할 일 수정
+할 일을 수정하려면 수정하려는 할 일 옆에 위치한 수정 버튼을 클릭합니다. 수정 모드가 활성화되면 할 일 내용을 변경할 수 있습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+할 일 삭제
+할 일을 삭제하려면 삭제하려는 할 일 옆에 위치한 삭제 버튼을 클릭합니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+완료한 일 처리
+완료한 일은 체크 박스를 클릭하여 처리할 수 있습니다.
