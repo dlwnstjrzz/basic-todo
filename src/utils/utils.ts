@@ -1,3 +1,33 @@
+interface Result {
+  ok: boolean;
+  data?: any;
+  message?: string;
+}
+
+const methodFormat = (callbackfunc) => {
+  const method = async (...args: any[]) => {
+    let result: Result = {
+      ok: false,
+    };
+    try {
+      const data = await callbackfunc(...args);
+      result = {
+        ok: true,
+        data,
+      };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        result = {
+          ok: false,
+          message: error.message,
+        };
+      }
+    }
+    return result;
+  };
+  return method;
+};
+
 const validate = (value: string, formType: string) => {
   let isValidate = true;
   const passwordRegex = /^.{8,}$/;
@@ -31,4 +61,4 @@ const validate = (value: string, formType: string) => {
   return validationResult;
 };
 
-export { validate };
+export { validate, methodFormat };
