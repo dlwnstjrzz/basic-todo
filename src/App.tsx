@@ -14,10 +14,7 @@ function App() {
 
   return (
     <Routes>
-      <Route
-        path="/wanted-pre-onboarding-frontend"
-        element={token ? <Navigate to="/todo" /> : <Navigate to="/signin" />}
-      />
+      <Route path="/" element={token ? <Navigate to="/todo" /> : <Navigate to="/signin" />} />
       <Route path="/signin" element={token ? <Navigate to="/todo" /> : <SignIn />} />
       <Route path="/signup" element={token ? <Navigate to="/todo" /> : <SignUp />} />
       <Route path="/todo" element={token ? <Todo /> : <Navigate to="/signin" />} />
