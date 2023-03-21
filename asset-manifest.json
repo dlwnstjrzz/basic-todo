@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/basic-todo/static/js/main.dd7ed18c.js",
-    "index.html": "/basic-todo/index.html",
-    "main.dd7ed18c.js.map": "/basic-todo/static/js/main.dd7ed18c.js.map"
+    "main.js": "/wanted-pre-onboarding-frontend/static/js/main.4bd27c48.js",
+    "index.html": "/wanted-pre-onboarding-frontend/index.html",
+    "main.4bd27c48.js.map": "/wanted-pre-onboarding-frontend/static/js/main.4bd27c48.js.map"
   },
   "entrypoints": [
-    "static/js/main.dd7ed18c.js"
+    "static/js/main.4bd27c48.js"
   ]
 }
