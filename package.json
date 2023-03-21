@@ -1,8 +1,8 @@
 {
-  "name": "basic-todo",
+  "name": "wanted-pre-onboarding-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dlwnstjrzz.github.io/basic-todo/",
+  "homepage": "https://dlwnstjrzz.github.io/wanted-pre-onboarding-frontend/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
