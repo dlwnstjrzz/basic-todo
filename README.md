@@ -4,6 +4,9 @@
 - typescript
 
 ## 배포 링크
+!! 요쳥을 보내던 서버가 닫혀서 기능이 제대로 수행되지 않음 !!
+
+기능 작동은 아래 데모영상으로 확인해주세요
 ### [github-pages 배포 링크](https://dlwnstjrzz.github.io/wanted-pre-onboarding-frontend/)
 
 ## 프로젝트 실행 방법
