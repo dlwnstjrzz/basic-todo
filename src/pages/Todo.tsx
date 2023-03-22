@@ -63,16 +63,18 @@ function Todo() {
 
   return (
     <TodoContainer>
-      <NewTodoInput
-        data-testid="new-todo-input"
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        disabled={isEditMode}
-      />
-      <NewTodoAddButton data-testid="new-todo-add-button" onClick={handleAddTodo}>
-        추가
-      </NewTodoAddButton>
+      <InputConatiner>
+        <NewTodoInput
+          data-testid="new-todo-input"
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          disabled={isEditMode}
+        />
+        <NewTodoAddButton data-testid="new-todo-add-button" onClick={handleAddTodo}>
+          추가
+        </NewTodoAddButton>
+      </InputConatiner>
       <TodoList todos={todos}>
         <TodoItemWithTodos
           setModifyTodo={setModifyTodo}
@@ -93,22 +95,36 @@ function Todo() {
 
 const NewTodoInput = styled.input`
   margin-right: 10px;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  width: 60%;
+  max-width: 600px;
 `;
 
 const NewTodoAddButton = styled.button`
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   background-color: #0077cc;
   color: #fff;
   border: none;
+  font-size: 18px;
 `;
-
+const InputConatiner = styled.div`
+  margin-bottom: 35px;
+  width: 100%;
+  text-align: center;
+`;
 const TodoContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
   padding: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
 `;
 
 export default Todo;
